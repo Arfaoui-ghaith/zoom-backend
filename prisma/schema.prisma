@@ -1,0 +1,63 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Platform {
+  id            String     @id
+  createdAt     DateTime   @default(now())
+  participants  ParticipantsOnMeeting[]
+}
+
+model Participant {
+  id          String     @id @default(uuid())
+  name        String
+  email       String     @unique
+  createdAt   DateTime   @default(now())
+  platforms   ParticipantsOnMeeting[]
+}
+
+model ParticipantsOnMeeting {
+  isHost Boolean
+  participant_platform_id  String
+  //registrant_id String
+  //participant_pin_code Int
+  meeting Meeting @relation(fields: [meeting_id], references: [id])
+  meeting_id String
+  participant       Participant     @relation(fields: [participant_id], references: [id])
+  participant_id  String
+  platform          Platform        @relation(fields: [platform_id], references: [id])
+  platform_id       String
+  join_url String
+  @@id([participant_id, platform_id, meeting_id])
+}
+
+model Meeting {
+  id  String  @id @default(uuid())
+  zoom_uuid String @unique
+  zoom_id String @unique
+  duration Int
+  pstn_password String
+  start_url String
+  join_url String
+  password String
+  type Int
+  request   Request @relation(fields: [request_id], references: [id])
+  request_id String  @unique
+  Participants ParticipantsOnMeeting[]
+}
+
+model Request {
+  id  String  @id @default(uuid())
+  recievedAt DateTime   @default(now())
+  senderIP String
+  meeting Meeting?
+}
+
