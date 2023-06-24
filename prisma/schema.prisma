@@ -36,6 +36,7 @@ model ParticipantsOnMeeting {
   platform          Platform        @relation(fields: [platform_id], references: [id])
   platform_id       String
   join_url String
+  createdAt     DateTime   @default(now())
   @@id([participant_id, platform_id, meeting_id])
 }
 
@@ -51,6 +52,7 @@ model Meeting {
   type Int
   request   Request @relation(fields: [request_id], references: [id])
   request_id String  @unique
+  createdAt     DateTime   @default(now())
   Participants ParticipantsOnMeeting[]
 }
 

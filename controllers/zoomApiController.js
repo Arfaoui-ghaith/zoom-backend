@@ -49,15 +49,14 @@ exports.createZoomMeeting = catchAsync(async (req, res, next) => {
         {
             type: 2,
             duration: req.body.max_duration,
-            private_meeting: true,
+            //private_meeting: true,
             settings: {
-                allow_multiple_devices: req.body.link_is_multiUse,
-                approval_type: 0,
-                auto_recording: 'cloud',
+                //allow_multiple_devices: req.body.link_is_multiUse,
+                //auto_recording: 'cloud',
                 host_video: true,
                 participant_video: true,
                 join_before_host: true,
-                registrants_confirmation_email: false
+                //registrants_confirmation_email: false
             },
         },
         {

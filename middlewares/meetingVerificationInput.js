@@ -33,7 +33,7 @@ exports.verifyAndSaveRequest = async (req, res, next) => {
 
         let participants = req.body.participants.map(p => {
             return {
-                participant_platform_id: p.id,
+                participant_platform_id: p.participant_id,
                 name: p.name,
                 email: p.email,
                 platform_id: p.platform_id,
@@ -48,8 +48,6 @@ exports.verifyAndSaveRequest = async (req, res, next) => {
             platform_id: req.body.host.platform_id,
             isHost: true
         });
-
-        console.log(participants);
 
         req.participantsInfo = participants;
         req.requestInfo = request;
